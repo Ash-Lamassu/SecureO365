@@ -120,13 +120,20 @@ Set-DkimSigningConfig -Identity domännamn -Enabled $true
 ### Konfigurera DMARC
 I Office 365 är DMARC redan konfigurerat för inkommande e-post, men behöver däremot ställas in för utgående email.
 1.	Först måste man identifiera kundens alla e-postservrar. Enklast är att kolla på SPF-posterna. Man bör även identifiera om kunden använder sig av spamfilter (Inte O365:s egna spamfilter) eller några tredjeparts tjänster för massutskick. 
+
 2.	Därefter skapas TXT-posten för DMARC som kan exempelvis se ut enligt nedan:
-_dmarc.bluewall.se 3600 IN TXT v=DMARC1;p=none;pct=100;rua=mailto:it@bluewall.se;ruf= mailto: it@bluewall.se;ri=84699;
-•	”p=” är policyn för domänen. p=none: E-postflödet påverkas inte men allt loggas. p=quarantine: E-post som passerar testerna hamnar i karantän. p=reject:  E-post som passerar testerna raderas, gäller dock inte Office 365, eftersom Microsoft väljer att lägga allt i karantän. 
+
+> _dmarc.bluewall.se 3600 IN TXT v=DMARC1;p=none;pct=100;rua=mailto:it@bluewall.se;ruf= mailto: it@bluewall.se;ri=84699;
+•	”p=” är policyn för domänen. p=none: E-postflödet påverkas inte men allt loggas. p=quarantine: E-post som passerar testerna hamnar i karantän. p=reject:  E-post som passerar testerna raderas, gäller dock inte Office 365, eftersom Microsoft väljer att lägga allt i karantän.
+
 •	pct=100: indikerar hur många procent av e-post som kontrolleras.
+
 •	rua: mottagre av XML-rapporterna
+
 •	ruf: mottagare av felsökningsrapporter.
+
 •	ri=: intervall för hur ofta rapporterna skickas i sekunder.
+
 3.	Det är en bra idé att börja med policy=none och kontrollera flödet innan man slår på hårdare filtrering.
  
 ### Konfigurera larm
