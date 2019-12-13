@@ -105,11 +105,12 @@ Get-DkimSigningConfig
 Get-DkimSigningConfig -Identity domännamn | fl *cname*
 ```
 4.	Skapa CNAME posterna I DNS för domänen. Den bör se ut enligt följande:
-Host name:            selector1._domainkey.<domain>
-Value:  selector1-<domainGUID>._domainkey.<initialDomain>
-TTL:                     3600  Host name:            selector2._domainkey.<domain>
-Value:  selector2-<domainGUID>._domainkey.<initialDomain>
-TTL:                     3600
+Host name: selector1._domainkey.<domain>
+Value: selector1-<domainGUID>._domainkey.<initialDomain>
+TTL: 3600 Host name: selector2._domainkey.<domain>
+Value: selector2-<domainGUID>._domainkey.<initialDomain>
+TTL: 3600
+ 
 5.	Vänta tills DNS-posterna publicerats och därefter aktivera DKIM på domänen med kommandot:
 ```
 Set-DkimSigningConfig -Identity domännamn -Enabled $true
