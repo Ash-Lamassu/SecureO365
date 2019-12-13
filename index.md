@@ -24,12 +24,10 @@ $UserCredential = Get-Credential
 $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection
 Import-PSSession $Session -DisableNameChecking
 ```
-
 2.	Aktivera audit loggning på alla e-postlådor.
 ```
 Get-Mailbox -ResultSize Unlimited -Filter {RecipientTypeDetails -eq "UserMailbox"} | Set-Mailbox -AuditEnabled $true
 ```
-
 3.	Verifiera att loggningen aktiverades.
  ```
 Get-mailbox | select UserPrincipalName, auditenabled, AuditDelegate, AuditAdmin
@@ -40,7 +38,6 @@ Resultatet bör se ut enligt bilden nedan:
 
 ### Avaktivera IMAP och POP
 1.	I Exchange Online med PowerShell.
-
 2.	Avaktivera IMAP och POP på befintliga maillådor.
 ```
 $Mailboxes = Get-CASMailbox -Filter {(ImapEnabled -eq $true) -or (PopEnabled -eq $true)}
