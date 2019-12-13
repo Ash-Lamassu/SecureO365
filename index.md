@@ -1,4 +1,4 @@
-![Build Status](https://nordlo.com/wp-content/uploads/2019/08/nordlologo.svg)
+[Build Status](https://nordlo.com/wp-content/uploads/2019/08/nordlologo.svg)
 
 # Checklista för säkrare Office 365 tenant
 ### Konfigurera filter mot skadlig kod
@@ -11,7 +11,9 @@
 1.	Gå till Exchange Admin Center -> Skydd -> Skräppostfilter
 2.	I fönstret Skräppostfilter, Ställ in enligt bilderna nedan. Anpassa gärna internationella skräppostinställningarna efter kundens behov.
 
-![spam1](https://i.imgur.com/z6hCxhQ.png)
+[spam1](https://i.imgur.com/z6hCxhQ.png)
+[spam2](https://i.imgur.com/fkOENxl.png)
+[spam3](https://i.imgur.com/l4JFlAt.png)
 
 > Glöm inte att konfigurera karantänrapports meddelanden till slutanvändaren.
 
