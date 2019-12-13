@@ -81,12 +81,10 @@ Set-ManagementRoleEntry MyBaseOptions-DisableForwarding\Set-Mailbox -RemoveParam
 ``` 
 Get-Mailbox -ResultSize Unlimited -Filter {(RecipientTypeDetails -ne "DiscoveryMailbox") -and ((ForwardingSmtpAddress -ne $null) -or (ForwardingAddress -ne $null))} | Select Identity | Export-Csv c:\ForwardingSetBefore.csv -append
 ```
-
 5.	För att radera existerande vidarebefordran som satts upp körs följande kommando.
 ``` 
 Get-Mailbox -filter {(RecipientTypeDetails -ne "DiscoveryMailbox") -and ((ForwardingSmtpAddress -ne $null) -or (ForwardingAddress -ne $null))} | Set-Mailbox -ForwardingSmtpAddress $null -ForwardingAddress $null
 ```
-
 6.	För att blockera automatiska forwarders till externa användare körs följande kommando. Användaren kommer att kunna skapa reglerna, men automatiska forwarders till externa adresser nekas av mailservern.
 ```
 Set-RemoteDomain Default -AutoForwardEnabled $false
