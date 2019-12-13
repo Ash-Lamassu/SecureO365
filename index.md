@@ -72,6 +72,7 @@ New-ManagementRole MyBaseOptions-DisableForwarding -Parent MyBaseOptions
 Set-ManagementRoleEntry MyBaseOptions-DisableForwarding\Set-Mailbox -RemoveParameter -Parameters DeliverToMailboxAndForward,ForwardingAddress,ForwardingSmtpAddress
 ```
 3.	Gå till Exchange Admin Center –> Behörigheter -> Användarroller och ändra Default Role Assignment Policy. Bocka ur MyBaseOptions och bocka i MyBaseOptions -DisableForwarding
+
 4.	Hämta existerande vidarebefordran som satts upp med följande kommando. Dessa regler sätts upp i Epostflödet under Exchange Admin Centers.
 
 ``` 
@@ -95,6 +96,7 @@ Validera SPF-posten med exempelvis https://mxtoolbox.com/spf.aspx. Resultatet b�
 v=spf1 include:spf.protection.outlook.com ip4:31.193.252.71 include:officeportal.se -all
 
 Om outputen visar ”~all” är det inställt på softfail, dvs att avsändare som inte är listade i TXT-posten tillåts att skicka men blir taggad som spam. ”-all” betyder att e-postservern är konfigurerad med hardfail och avsändaren måste alltid listas i TXT-posten annars nekas meddelanden.
+
 
 ### Konfigurera DKIM
 1.	I Exchange Online med PowerShell.
@@ -126,10 +128,6 @@ Set-DkimSigningConfig -Identity domännamn -Enabled $true
 ```
 Obs. Om ni får felmeddelandet nedan har inte DNS-posterna publicerats än.
  
-6.	Stäng Powershell sessionen mot Exchange Online.
-```
-Remove-PSSession $Session
-```
 ### Konfigurera DMARC
 I Office 365 är DMARC redan konfigurerat för inkommande e-post, men behöver däremot ställas in för utgående email.
 1.	Först måste man identifiera kundens alla e-postservrar. Enklast är att kolla på SPF-posterna. Man bör även identifiera om kunden använder sig av spamfilter (Inte O365:s egna spamfilter) eller några tredjeparts tjänster för massutskick. 
