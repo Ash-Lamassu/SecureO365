@@ -5,7 +5,7 @@
 1.	Gå till Exchange Admin Center -> Skydd -> Filter mot skadlig kod
 2.	Markera Default inställningarna och klicka på pennan för att ändra standardinställningarna.
 3.	Gå till Inställningar i Default fönstret.
-4.	Ställ in filter för filtyper av bifogade filer efter önskemål eller ta med alla.
+4.	Ställ in önskade filter för filtyper av bifogade filer och.
 
 ### Skräppostfilter
 1.	Gå till Exchange Admin Center -> Skydd -> Skräppostfilter
@@ -16,7 +16,6 @@
 ![spam3](https://i.imgur.com/l4JFlAt.png)
 
 > Glöm inte att konfigurera karantänrapports meddelanden till slutanvändaren.
-
 
 ### Aktivera Audit log för alla användare
 1.	Logga in mot Exchange Online med PowerShell.
@@ -35,17 +34,10 @@ Get-mailbox | select UserPrincipalName, auditenabled, AuditDelegate, AuditAdmin
 ```
 Resultatet bör se ut enligt bilden nedan: 
 ![spam1](https://i.imgur.com/52zXnJI.png)
-4.	Stäng Powershell sessionen mot Exchange Online.
-``` 
-Remove-PSSession $Session
-```
+
 ### Avaktivera IMAP och POP
-1.	Logga in mot Exchange Online med PowerShell.
-```
-$UserCredential = Get-Credential
-$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection
-Import-PSSession $Session -DisableNameChecking
-```
+1.	I Exchange Online med PowerShell.
+
 2.	Avaktivera IMAP och POP på befintliga maillådor.
 ```
 $Mailboxes = Get-CASMailbox -Filter {(ImapEnabled -eq $true) -or (PopEnabled -eq $true)}
@@ -70,10 +62,7 @@ else {Write-Host IMAP already disabled. -ForegroundColor Green}
 ```
 Get-CASMailboxPlan | Set-CASMailboxPlan -ImapEnabled $false -PopEnabled $false
 ```
-4.	Stäng Powershell sessionen mot Exchange Online.
-``` 
-Remove-PSSession $Session
-```
+
 ### Avaktivera vidarebefordran
 1.	Logga in mot Exchange Online med PowerShell
 ``` 
