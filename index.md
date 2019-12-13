@@ -24,6 +24,8 @@ $UserCredential = Get-Credential
 $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection
 Import-PSSession $Session -DisableNameChecking
 ```
+> Längst ner i dokumentet finns en beskrivning på hur man ansluter till Office 365 tenant med MFA.
+
 2.	Aktivera audit loggning på alla e-postlådor.
 ```
 Get-Mailbox -ResultSize Unlimited -Filter {RecipientTypeDetails -eq "UserMailbox"} | Set-Mailbox -AuditEnabled $true
