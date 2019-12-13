@@ -64,12 +64,8 @@ Get-CASMailboxPlan | Set-CASMailboxPlan -ImapEnabled $false -PopEnabled $false
 ```
 
 ### Avaktivera vidarebefordran
-1.	Logga in mot Exchange Online med PowerShell
-``` 
-$UserCredential = Get-Credential
-$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection
-Import-PSSession $Session -DisableNameChecking
-```
+1.	I Exchange Online med PowerShell
+
 2.	Kör följande rader för att skapa en rollen som ska användas senare:
 ``` 
 New-ManagementRole MyBaseOptions-DisableForwarding -Parent MyBaseOptions
@@ -77,21 +73,23 @@ Set-ManagementRoleEntry MyBaseOptions-DisableForwarding\Set-Mailbox -RemoveParam
 ```
 3.	Gå till Exchange Admin Center –> Behörigheter -> Användarroller och ändra Default Role Assignment Policy. Bocka ur MyBaseOptions och bocka i MyBaseOptions -DisableForwarding
 4.	Hämta existerande vidarebefordran som satts upp med följande kommando. Dessa regler sätts upp i Epostflödet under Exchange Admin Centers.
+
 ``` 
 Get-Mailbox -ResultSize Unlimited -Filter {(RecipientTypeDetails -ne "DiscoveryMailbox") -and ((ForwardingSmtpAddress -ne $null) -or (ForwardingAddress -ne $null))} | Select Identity | Export-Csv c:\ForwardingSetBefore.csv -append
 ```
+
 5.	För att radera existerande vidarebefordran som satts upp körs följande kommando.
+
 ``` 
 Get-Mailbox -filter {(RecipientTypeDetails -ne "DiscoveryMailbox") -and ((ForwardingSmtpAddress -ne $null) -or (ForwardingAddress -ne $null))} | Set-Mailbox -ForwardingSmtpAddress $null -ForwardingAddress $null
 ```
+
 6.	För att blockera automatiska forwarders till externa användare körs följande kommando. Användaren kommer att kunna skapa reglerna, men automatiska forwarders till externa adresser nekas av mailservern.
+
 ```
 Set-RemoteDomain Default -AutoForwardEnabled $false
 ```
-7.	Stäng Powershell sessionen mot Exchange Online.
-``` 
-Remove-PSSession $Session
-```
+
 ### Konfigurera SPF
 Validera SPF-posten med exempelvis https://mxtoolbox.com/spf.aspx. Resultatet bör se ut enligt texten nedan.
 v=spf1 include:spf.protection.outlook.com ip4:31.193.252.71 include:officeportal.se -all
@@ -99,20 +97,20 @@ v=spf1 include:spf.protection.outlook.com ip4:31.193.252.71 include:officeportal
 Om outputen visar ”~all” är det inställt på softfail, dvs att avsändare som inte är listade i TXT-posten tillåts att skicka men blir taggad som spam. ”-all” betyder att e-postservern är konfigurerad med hardfail och avsändaren måste alltid listas i TXT-posten annars nekas meddelanden.
 
 ### Konfigurera DKIM
-1.	Logga in mot Exchange Online med PowerShell.
-``` 
-$UserCredential = Get-Credential
-$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection
-Import-PSSession $Session -DisableNameChecking
-```
+1.	I Exchange Online med PowerShell.
+
 2.	Lista alla domäner och kontrollera DKIM statusen.
+
 ``` 
 Get-DkimSigningConfig
 ```
+
 3.	Hämta CNAME för DNS för specifika domäner.
+
 ``` 
 Get-DkimSigningConfig -Identity domännamn | fl *cname*
 ```
+
 4.	Skapa CNAME posterna I DNS för domänen. Den bör se ut enligt följande:
 Host name:            selector1._domainkey.<domain>
 Value:  selector1-<domainGUID>._domainkey.<initialDomain>
