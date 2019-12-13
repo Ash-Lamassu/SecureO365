@@ -138,6 +138,8 @@ I Office 365 är DMARC redan konfigurerat för inkommande e-post, men behöver d
 •	ri=: intervall för hur ofta rapporterna skickas i sekunder.
 
 3.	Det är en bra idé att börja med policy=none och kontrollera flödet innan man slår på hårdare filtrering.
+
+4. Analysera rapporterna under 1 månad, justera DNS-posterna för DMARC och ställ policyn därefter.
  
 ### Konfigurera larm
 1.	Gå till Säkerhet och efterlevnad -> Varningar -> Varningsprinciper.
