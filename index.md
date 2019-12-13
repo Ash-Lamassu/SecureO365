@@ -114,7 +114,7 @@ TTL:                     3600
 ```
 Set-DkimSigningConfig -Identity domännamn -Enabled $true
 ```
-Obs. Om ni får felmeddelandet nedan har inte DNS-posterna publicerats än.
+> Om ni får ett felmeddelandet som säger att **CNAME recors does not exist for this config** beror det på att antingen har inte DNS-posterna publicerats än. Om ni får felmedelandet trots att ni väntat längre tid än vad som står i TTL bör ni kontrollera DNS-posten.
  
 ### Konfigurera DMARC
 I Office 365 är DMARC redan konfigurerat för inkommande e-post, men behöver däremot ställas in för utgående email.
