@@ -71,6 +71,7 @@ Get-CASMailboxPlan | Set-CASMailboxPlan -ImapEnabled $false -PopEnabled $false
 New-ManagementRole MyBaseOptions-DisableForwarding -Parent MyBaseOptions
 Set-ManagementRoleEntry MyBaseOptions-DisableForwarding\Set-Mailbox -RemoveParameter -Parameters DeliverToMailboxAndForward,ForwardingAddress,ForwardingSmtpAddress
 ```
+
 3.	Gå till Exchange Admin Center –> Behörigheter -> Användarroller och ändra Default Role Assignment Policy. Bocka ur MyBaseOptions och bocka i MyBaseOptions -DisableForwarding
 
 4.	Hämta existerande vidarebefordran som satts upp med följande kommando. Dessa regler sätts upp i Epostflödet under Exchange Admin Centers.
