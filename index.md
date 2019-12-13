@@ -24,14 +24,17 @@ $UserCredential = Get-Credential
 $Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://outlook.office365.com/powershell-liveid/ -Credential $UserCredential -Authentication Basic -AllowRedirection
 Import-PSSession $Session -DisableNameChecking
 ```
+
 2.	Aktivera audit loggning på alla e-postlådor.
 ```
 Get-Mailbox -ResultSize Unlimited -Filter {RecipientTypeDetails -eq "UserMailbox"} | Set-Mailbox -AuditEnabled $true
 ```
+
 3.	Verifiera att loggningen aktiverades.
  ```
 Get-mailbox | select UserPrincipalName, auditenabled, AuditDelegate, AuditAdmin
 ```
+
 Resultatet bör se ut enligt bilden nedan: 
 ![spam1](https://i.imgur.com/52zXnJI.png)
 
@@ -64,7 +67,7 @@ Get-CASMailboxPlan | Set-CASMailboxPlan -ImapEnabled $false -PopEnabled $false
 ```
 
 ### Avaktivera vidarebefordran
-1.	I Exchange Online med PowerShell
+1.	I Exchange Online med PowerShell.
 
 2.	Kör följande rader för att skapa en rollen som ska användas senare:
 ``` 
@@ -75,19 +78,16 @@ Set-ManagementRoleEntry MyBaseOptions-DisableForwarding\Set-Mailbox -RemoveParam
 3.	Gå till Exchange Admin Center –> Behörigheter -> Användarroller och ändra Default Role Assignment Policy. Bocka ur MyBaseOptions och bocka i MyBaseOptions -DisableForwarding
 
 4.	Hämta existerande vidarebefordran som satts upp med följande kommando. Dessa regler sätts upp i Epostflödet under Exchange Admin Centers.
-
 ``` 
 Get-Mailbox -ResultSize Unlimited -Filter {(RecipientTypeDetails -ne "DiscoveryMailbox") -and ((ForwardingSmtpAddress -ne $null) -or (ForwardingAddress -ne $null))} | Select Identity | Export-Csv c:\ForwardingSetBefore.csv -append
 ```
 
 5.	För att radera existerande vidarebefordran som satts upp körs följande kommando.
-
 ``` 
 Get-Mailbox -filter {(RecipientTypeDetails -ne "DiscoveryMailbox") -and ((ForwardingSmtpAddress -ne $null) -or (ForwardingAddress -ne $null))} | Set-Mailbox -ForwardingSmtpAddress $null -ForwardingAddress $null
 ```
 
 6.	För att blockera automatiska forwarders till externa användare körs följande kommando. Användaren kommer att kunna skapa reglerna, men automatiska forwarders till externa adresser nekas av mailservern.
-
 ```
 Set-RemoteDomain Default -AutoForwardEnabled $false
 ```
