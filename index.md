@@ -10,8 +10,10 @@
 ### Skräppostfilter
 1.	Gå till Exchange Admin Center -> Skydd -> Skräppostfilter
 2.	I fönstret Skräppostfilter, Ställ in enligt bilderna nedan. Anpassa gärna internationella skräppostinställningarna efter kundens behov.
+
 ![spam1](https://i.imgur.com/z6hCxhQ.png)
->Glöm inte att konfigurera karantänrapports meddelanden till slutanvändaren.
+
+> Glöm inte att konfigurera karantänrapports meddelanden till slutanvändaren.
 
 
 ### Aktivera Audit log för alla användare
